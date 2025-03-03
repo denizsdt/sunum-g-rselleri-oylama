@@ -1,0 +1,69 @@
+{\rtf1\ansi\ansicpg1254\cocoartf2758
+\cocoatextscaling0\cocoaplatform0{\fonttbl\f0\fswiss\fcharset0 Helvetica;}
+{\colortbl;\red255\green255\blue255;}
+{\*\expandedcolortbl;;}
+\paperw11900\paperh16840\margl1440\margr1440\vieww11520\viewh8400\viewkind0
+\pard\tx566\tx1133\tx1700\tx2267\tx2834\tx3401\tx3968\tx4535\tx5102\tx5669\tx6236\tx6803\pardirnatural\partightenfactor0
+
+\f0\fs24 \cf0 const contentData = [\
+    \{\
+        type: 'image',\
+        src: 'https://via.placeholder.com/400',\
+        votes: \{ like: 0, dislike: 0 \}\
+    \},\
+    \{\
+        type: 'video',\
+        src: 'https://www.w3schools.com/html/mov_bbb.mp4',\
+        votes: \{ like: 0, dislike: 0 \}\
+    \},\
+    \{\
+        type: 'image',\
+        src: 'https://via.placeholder.com/400x200',\
+        votes: \{ like: 0, dislike: 0 \}\
+    \}\
+];\
+\
+function displayContent() \{\
+    const container = document.getElementById('content-container');\
+    container.innerHTML = '';\
+\
+    contentData.forEach((item, index) => \{\
+        const contentItem = document.createElement('div');\
+        contentItem.className = 'content-item';\
+        \
+        let contentElement;\
+\
+        if (item.type === 'image') \{\
+            contentElement = `<img src="$\{item.src\}" alt="Image $\{index + 1\}">`;\
+        \} else \{\
+            contentElement = `<video controls>\
+                                <source src="$\{item.src\}" type="video/mp4">\
+                               </video>`;\
+        \}\
+\
+        const buttons = `\
+            <button onclick="vote($\{index\}, 'like')">Be\uc0\u287 endim</button>\
+            <button onclick="vote($\{index\}, 'dislike')">Be\uc0\u287 enmedim</button>\
+        `;\
+\
+        contentItem.innerHTML = `$\{contentElement\} $\{buttons\}`;\
+        container.appendChild(contentItem);\
+    \});\
+\}\
+\
+function vote(index, voteType) \{\
+    if (voteType === 'like') \{\
+        contentData[index].votes.like++;\
+    \} else \{\
+        contentData[index].votes.dislike++;\
+    \}\
+\}\
+\
+function sortContent() \{\
+    contentData.sort((a, b) => (b.votes.like - b.votes.dislike) - (a.votes.like - a.votes.dislike));\
+    displayContent();\
+\}\
+\
+// Sayfa ilk y\'fcklendi\uc0\u287 inde i\'e7eri\u287 i g\'f6ster\
+displayContent();\
+}
